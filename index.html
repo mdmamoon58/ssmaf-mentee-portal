@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSMAF Mentee Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f7;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        h1, h2 {
+            color: #004080;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #004080;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0059b3;
+        }
+        .mentor-details, .policy {
+            margin-top: 30px;
+            background: #eef2f3;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>SSMAF: Get your Mentor Details</h1>
+<form id="menteeForm">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" required>
+
+    <label for="enrollment">Enrollment Number</label>
+    <input type="text" id="enrollment" required>
+
+    <label for="faculty">Faculty</label>
+    <input type="text" id="faculty" required>
+
+    <label for="department">Department</label>
+    <input type="text" id="department" required>
+
+    <button type="submit">Submit</button>
+</form>
+
+<div class="mentor-details" id="mentorDetails" style="display:none;"></div>
+<div class="policy" id="policySection" style="display:none;"></div>
+
+<script>
+    const mentorMap = {
+        "GM9800": {name: "Ayesha Eram", email: "ayeshaerammamu@gmail.com"},
+        "GM2778": {name: "Altafur Rahman", email: "altafk013@gmail.com"},
+        "GK4763": {name: "Masood Ahmad/Mamoon", email: "quest.masood@gmail.com"},
+        "GN0961": {name: "Arham Shamim", email: "arhamshamim94@gmail.com"},
+        "GK5102": {name: "Qazi Shabiul Mateen", email: "qsmateen4@gmail.com"},
+        "GL4340": {name: "Junaid Khan", email: "junaid.msu93@gmail.com"},
+        "GL5628": {name: "Masood Ahmad", email: "quest.masood@gmail.com"},
+        "GM1490": {name: "Yusuf Ahmad Khan", email: "yusufahmed728@gmail.com"},
+        "GP7595": {name: "Masood Ahmad", email: "quest.masood@gmail.com"},
+        "GJ4547": {name: "Shoeb Azam Farooqui", email: "shoebazam6331@gmail.com"},
+        "GL6519": {name: "Seerin Ahmad", email: "seerin.amu@gmail.com"},
+        "GK9757": {name: "Bushra Zia", email: "bushra.zia1999@gmail.com"},
+        "GK5271": {name: "Yawar Habib", email: "yawar.habib@skoltech.ru"},
+        "GH5681": {name: "Yawar Habib", email: "yawar.habib@skoltech.ru"},
+        "GM5286": {name: "Safiya Ahsan", email: "safiya.ahsan@gmail.com"},
+        "GI0303": {name: "Mohd Mamoon", email: "mdmamoon58@gmail.com"},
+        "GL3960": {name: "Seerin Ahmad", email: "seerin.amu@gmail.com"},
+        "GK3091": {name: "Ehtesham Mateen", email: "shaad.matin@gmail.com"},
+    };
+
+    const policyText = `The SSMAF Mentorship Program supports awardees in applying to international universities, securing funding, and achieving academic and professional goals. Mentorship is voluntary but structured. Mentors guide mentees in applications, exams, and motivation. Communication is essential. Reimbursements (IELTS/TOEFL) require mentor approval and minimum scores. Funding to mentees is not direct; all transactions are recorded. If mentees are unresponsive, mentors must notify SSMAF. For help, contact mentorship@ssmaf.org.`;
+
+    document.getElementById("menteeForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const enrollment = document.getElementById("enrollment").value.trim().toUpperCase();
+        const mentor = mentorMap[enrollment];
+
+        if (mentor) {
+           document.getElementById("mentorDetails").style.display = "block";
+document.getElementById("mentorDetails").innerHTML = `
+    <h2>Mentor Details</h2>
+    <p><strong>Mentor Name:</strong> ${mentor.name}</p>
+    <p><strong>Mentor Email:</strong> <a href="mailto:${mentor.email}">${mentor.email}</a></p>
+`;
+
+document.getElementById("policySection").style.display = "block";
+document.getElementById("policySection").innerHTML = `
+    <h2>SSMAF Mentor Policy</h2>
+    <p>${policyText}</p>
+    <p><a href="Copy_of_SSMAF_Mentor_Policy_v2_2025.docx" download style="color: blue; font-weight: bold;">
+        📄 Download Full SSMAF Mentor Policy (DOCX)
+    </a></p>
+`;
+
+        } else {
+            alert("Enrollment number not found. Please check your entry.");
+        }
+    });
+</script>
+
+</body>
+</html>
