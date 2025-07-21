@@ -53,7 +53,7 @@
 </head>
 <body>
 
-<h1>SSMAF Mentee Registration</h1>
+<h1>SSMAF: Get your mentee details</h1>
 <form id="menteeForm">
   <label for="name">Name</label>
   <input type="text" id="name" required>
@@ -82,7 +82,8 @@
         mentorMap[entry["Enrol No"]] = {
           name: entry["Mentor"],
           email: entry["Mentor Email ID"],
-          whatsapp: entry["WhatApp"]
+          whatsapp: entry["WhatApp"],
+          confirmation: (entry["Mentor Confirmation"] || "").trim().toLowerCase()
         };
       });
     })
@@ -92,23 +93,36 @@
     });
 
 
-
   document.getElementById("menteeForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const enrolNo = document.getElementById("enrolNo").value.trim().toUpperCase();
+    const enrolNo = document.getElementById("enrolNo").value.trim();
     const mentor = mentorMap[enrolNo];
 
-    if (mentor) {
-      document.getElementById("mentorDetails").style.display = "block";
+    document.getElementById("mentorDetails").style.display = "block";
+    document.getElementById("policySection").style.display = "none";
+
+    if (!mentor) {
+      document.getElementById("mentorDetails").innerHTML = `
+        <h2>Enrollment Not Found</h2>
+        <p>We could not find this Enrollment No in our records. Please check your entry.</p>
+      `;
+      return;
+    }
+
+    if (mentor.confirmation === "completed") {
       document.getElementById("mentorDetails").innerHTML = `
         <h2>Mentor Details</h2>
         <p><strong>Mentor Name:</strong> ${mentor.name}</p>
         <p><strong>Mentor Email:</strong> <a href="mailto:${mentor.email}">${mentor.email}</a></p>
         <p><strong>WhatsApp:</strong> <a href="https://wa.me/${mentor.whatsapp.replace(/\D/g, '')}" target="_blank">${mentor.whatsapp}</a></p>
       `;
+
     } else {
-      alert("Enrollment No not found. Please check the value.");
+      document.getElementById("mentorDetails").innerHTML = `
+        <h2>Mentor Confirmation</h2>
+        <p>Mentor confirmation is in progress. You will get the details soon. Please try again later.</p>
+      `;
     }
   });
 </script>
