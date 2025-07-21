@@ -1,0 +1,17 @@
+function doGet() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+  const data = sheet.getDataRange().getValues();
+  const keys = data[0];
+  const output = [];
+
+  for (let i = 1; i < data.length; i++) {
+    let row = {};
+    for (let j = 0; j < keys.length; j++) {
+      row[keys[j]] = data[i][j];
+    }
+    output.push(row);
+  }
+
+  return ContentService.createTextOutput(JSON.stringify(output))
+    .setMimeType(ContentService.MimeType.JSON);
+}
